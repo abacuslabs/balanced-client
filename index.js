@@ -1,4 +1,5 @@
 var superagent = require('superagent')
+var underscore = require('underscore')
 var BASE = 'https://api.balancedpayments.com'
 
 module.exports = BalancedClient
@@ -49,8 +50,13 @@ BalancedClient.prototype.delete = function(path, cb) {
 
 
 function responder(cb) {
-  return function(r) {
-    if (r.status >= 400) return cb(new Error([r.status, r.body.description].join(': ')))
+  return function(err, r) {
+    if (err) return cb(err)
+    if (r.error) {
+      underscore.extend(r.error, r.body)
+      r.error.message += " request_id: " + r.body.request_id
+      return cb(r.error)
+    }
     cb(null, r.body)
   }
 }
