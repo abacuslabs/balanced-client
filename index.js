@@ -50,7 +50,7 @@ BalancedClient.prototype.delete = function(path, cb) {
 
 function responder(cb) {
   return function(r) {
-    if (r.status >= 400) cb(new Error([r.status, r.body.description].join(': ')))
+    if (r.status >= 400) return cb(new Error([r.status, r.body.description].join(': ')))
     cb(null, r.body)
   }
 }
