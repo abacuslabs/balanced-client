@@ -13,15 +13,14 @@
  * See the main function at end for this.
  */
 
-var Balanced = require('./index')
+var balanced = require('./index').config('59ef4c8ef64211e284cc026ba7cd33d0')
   , assert = require('assert')
 
-var balanced = new Balanced('59ef4c8ef64211e284cc026ba7cd33d0')
-  , customer
+var customer
   , account
   , verification
 
- 
+
 function createCustomer(cb) {
   balanced.post('/v1/customers', {
     name: "Some Customer",

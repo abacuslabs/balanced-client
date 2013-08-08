@@ -1,6 +1,7 @@
 var assert = require('assert')
-var Balanced = require('../index')
-var balanced = new Balanced('59ef4c8ef64211e284cc026ba7cd33d0')
+var balanced = require('../index')
+
+balanced.config('59ef4c8ef64211e284cc026ba7cd33d0')
 
 describe('Validations', function() {
 
