@@ -9,43 +9,41 @@ function BalancedClient(secret) {
 }
 
 BalancedClient.prototype.get = function(path, data, cb) {
-  if ('function' == typeof data) {
-    cb = data
-    data = {}
-  }
-  superagent
-    .get(BASE+path)
-    .auth(this.secret, '')
-    .query(data)
-    .end(responder(cb))
+  this.request('GET', path, data, cb)
 }
 
 BalancedClient.prototype.post = function(path, data, cb) {
+  this.request('POST', path, data, cb)
+}
+
+BalancedClient.prototype.put = function(path, data, cb) {
+  this.request('PUT', path, data, cb)
+}
+
+BalancedClient.prototype.delete = function(path, cb) {
+  this.request('DELETE', path, {}, cb)
+}
+
+BalancedClient.prototype.request = function(method, path, data, cb) {
   if ('function' == typeof data) {
     cb = data
     data = {}
   }
-  superagent
-    .post(BASE+path)
-    .auth(this.secret, '')
-    .send(data)
-    .end(responder(cb))
-}
+  if (typeof cb !== 'function') {
+    throw new Error("callback function is required")
+    return
+  }
+  if (path.indexOf('/v1/') !== 0) {
+    return cb(new Error("invalid balanced url (should start with /v1/): " + path))
+  }
 
-BalancedClient.prototype.put = function(path, data, cb) {
-  superagent
-    .put(BASE+path)
-    .auth(this.secret, '')
-    .send(data)
-    .end(responder(cb))
-}
-
-BalancedClient.prototype.delete = function(path, cb) {
-  superagent
-    .del(BASE+path)
-    .auth(this.secret, '')
-    .send({})
-    .end(responder(cb))
+  var req = superagent(method, BASE+path).auth(this.secret, '')
+  if (method === 'GET') {
+    req.query(data)
+  } else {
+    req.send(data)
+  }
+  req.end(responder(cb))
 }
 
 
