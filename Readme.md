@@ -17,6 +17,7 @@ npm install balanced-client
 
 ```js
 var balanced = require('balanced-client').config('your_balanced_secret_here')
+balanced.logErrors = true
 
 balanced.get('/v1/customers', function(err, data) {
   console.log('your customers:', data)

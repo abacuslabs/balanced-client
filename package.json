@@ -9,8 +9,7 @@
     "test": "mocha --reporter spec --slow 4000 --timeout 12000"
   },
   "dependencies": {
-    "superagent": "~0.15.4",
-    "underscore": "~1.5.1"
+    "superagent": "~0.15.4"
   },
   "devDependencies": {
     "mocha": "~1.12.0"

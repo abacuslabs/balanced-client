@@ -1,9 +1,10 @@
 var superagent = require('superagent')
-var underscore = require('underscore')
 var BASE = 'https://api.balancedpayments.com'
 
 
 var secret
+
+exports.logErrors = false
 
 exports.config = function(s) {
   secret = s
@@ -51,8 +52,9 @@ exports.request = function(method, path, data, cb) {
   req.end(function(err, r) {
     if (err) return cb(err)
     if (r.error) {
-      underscore.extend(r.error, r.body)
-      r.error.message += " request_id: " + r.body.request_id
+      if (exports.logErrors) console.error(r.body)
+      r.error.balanced = r.body
+      r.error.message += " - " + r.body.description
       return cb(r.error)
     }
     cb(null, r.body)
