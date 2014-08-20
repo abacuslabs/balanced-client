@@ -1,6 +1,6 @@
 {
   "name": "balanced-client",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "minimal client for balanced payments API",
   "main": "index.js",
   "author": "Steve Perkins <steve@abacus.com>",
