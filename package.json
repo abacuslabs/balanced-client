@@ -4,6 +4,7 @@
   "description": "minimal client for balanced payments API",
   "main": "index.js",
   "author": "Steve Perkins <steve@abacus.com>",
+  "repository": "https://github.com/abacuslabs/balanced-client.git",
   "license": "BSD",
   "scripts": {
     "test": "mocha --reporter spec --slow 4000 --timeout 12000"
